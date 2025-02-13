@@ -34,6 +34,8 @@ const App = () => {
     <div className="flex h-screen flex-col items-center justify-center">
       <div className="container mx-auto p-10">
         <Header />
+
+        {/* Slot i dugme za spin i gamble */}
         <div className="flex flex-row items-center justify-center gap-10">
           <div className="flex flex-col items-center justify-center rounded-lg border border-yellow-500 bg-gray-900 p-4 shadow-lg">
             <div className="text-xl font-bold text-white">20 Lines</div>
@@ -57,6 +59,8 @@ const App = () => {
             </button>
           </div>
         </div>
+
+        {/* Prikazujemo Gambling komponentu kao modal */}
         {isGambling && <Gambling setIsGambling={setIsGambling} />}
         <Balance />
       </div>

@@ -15,24 +15,29 @@ const Slots = () => {
   const [winningLines, setWinningLines] = useState<Result[]>([]);
   const [currentLineIndex, setCurrentLineIndex] = useState(0);
 
-  // Konvertujemo slotValues u grid kada animacija počne
+  // Resetujemo pobedničke linije ČIM spin krene
+  useEffect(() => {
+    if (isAnimating.some((anim) => anim)) {
+      setWinningLines([]); // Reset
+      setCurrentLineIndex(0);
+    }
+  }, [isAnimating]);
+
+  // Kada se animacija završi, ažuriramo grid
   useEffect(() => {
     if (isAnimating.some((anim) => anim)) return;
     setGrid(convertToGrid(slotValues));
   }, [isAnimating, slotValues]);
 
-  // Računamo pobedničke linije kada animacija stane
+  // Kada se grid ažurira, računamo pobedničke linije
   useEffect(() => {
-    if (isAnimating.some((anim) => anim)) {
-      setWinningLines([]);
-      setCurrentLineIndex(0); // Resetujemo linije kad počne spin
-    } else {
-      const lines = showWinningLines(grid);
-      const winning = calculateWinnings(lines, bet);
-      setCurrentWinning(winning);
-      setWinningLines(lines);
-    }
-  }, [isAnimating, grid]);
+    if (isAnimating.some((anim) => anim) || winningLines.length > 0) return;
+
+    const lines = showWinningLines(grid);
+    const winning = calculateWinnings(lines, bet);
+    setCurrentWinning(winning);
+    setWinningLines(lines);
+  }, [grid]);
 
   // Animacija linija - prikazujemo jednu po jednu
   useEffect(() => {

@@ -10,6 +10,7 @@ const Gambling = ({ setIsGambling }: Props) => {
   const { currentWinning, setCurrentWinning } = useSlots();
   const [potentialWin, setPotentialWin] = useState(currentWinning * 2);
   const [isWinning, setIsWinning] = useState(false);
+  const [isLost, setIsLost] = useState(false);
 
   const handleChoice = () => {
     const isWin = Math.random() < 0.5; // 50% sansa za dobitak
@@ -20,7 +21,8 @@ const Gambling = ({ setIsGambling }: Props) => {
       setPotentialWin(potentialWin * 2);
     } else {
       setCurrentWinning(0);
-      setIsGambling(false);
+      setIsLost(true);
+      setTimeout(() => setIsGambling(false), 1000); // LOST traje 1 sekundu
     }
   };
 
@@ -41,7 +43,7 @@ const Gambling = ({ setIsGambling }: Props) => {
         </div>
 
         {/* Karta */}
-        <Card isWinning={isWinning} />
+        <Card isWinning={isWinning} isLost={isLost} />
 
         {/* Dugmad za izbor */}
         <p className="mb-2 text-yellow-400">SELECT RED OR BLACK</p>
