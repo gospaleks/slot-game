@@ -25,12 +25,13 @@ const Reel = ({ index, winningLines }: Props) => {
       style={
         {
           "--duration": `${0.8 + index * 0.25}s`,
+          boxShadow: "0 4px 8px rgba(255, 255, 255, 0.5)",
         } as React.CSSProperties
       }
     >
       <div
         className={`${isAnimating[index] ? "reel-spin" : ""} flex flex-col gap-2`}
-        style={{ height: "384px", width: "142px" }}
+        style={{ height: "384px", width: "128px" }}
       >
         {displayValues.map((value, i) => {
           // Proveravamo da li je trenutna pozicija (i, index) deo pobedničke linije
@@ -49,10 +50,14 @@ const Reel = ({ index, winningLines }: Props) => {
                 width: "128px",
                 position: "absolute",
                 top: `${i * 128}px`,
-                left: 8,
+                left: 0,
                 backgroundColor: isWinningCell
                   ? "rgba(255, 255, 0, 0.5)"
                   : "transparent",
+                // backgroundImage: isWinningCell
+                //   ? "url(https://i.pinimg.com/originals/93/33/81/93338121b5740dca5013b9fdfc9566a3.gif)"
+                //   : "none",
+                // backgroundSize: "cover",
               }}
             >
               <img

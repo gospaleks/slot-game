@@ -1,13 +1,28 @@
 import { useSlots } from "../context";
+import { betValues } from "../utils/fruitPayouts";
 
 const Balance = () => {
-  const { credit, bet, setBet } = useSlots();
+  const { credit, bet, setBet, currentWinning } = useSlots();
 
-  const handleDecrease = () => setBet((prev) => Math.max(5, prev - 5));
-  const handleIncrease = () => setBet((prev) => Math.min(credit, prev + 5));
+  const handleDecrease = () => {
+    const currentIndex = betValues.indexOf(bet);
+    if (currentIndex > 0) {
+      setBet(betValues[currentIndex - 1]);
+    }
+  };
+
+  const handleIncrease = () => {
+    const currentIndex = betValues.indexOf(bet);
+    if (
+      currentIndex < betValues.length - 1 &&
+      betValues[currentIndex + 1] <= credit
+    ) {
+      setBet(betValues[currentIndex + 1]);
+    }
+  };
 
   return (
-    <div className="m-10 flex flex-col items-center justify-center gap-4 rounded-lg border-2 border-yellow-500 bg-gray-900 p-6 shadow-lg">
+    <div className="m-8 flex flex-row items-center justify-center gap-4 rounded-lg border-2 border-yellow-500 bg-gray-900 p-6 shadow-lg">
       {/* Credit Display */}
       <p className="text-3xl font-extrabold text-yellow-400">
         💰 Credit: <span className="text-white">{credit} RSD</span>
@@ -33,6 +48,12 @@ const Balance = () => {
           +
         </button>
       </div>
+
+      {/* Current Winning Display */}
+      <p className="text-2xl font-bold text-green-400">
+        🎉 Current Winning:{" "}
+        <span className="text-white">{currentWinning} RSD</span>
+      </p>
     </div>
   );
 };

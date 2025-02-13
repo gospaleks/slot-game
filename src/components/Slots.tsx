@@ -5,30 +5,47 @@ import { Fruit, Result } from "../types";
 import convertToGrid from "../utils/convertToGrid";
 import showWinningLines from "../utils/showWinningLines";
 import winningLinesPositions from "../data/winningLines";
+import { calculateWinnings } from "../utils/fruitPayouts";
 
 const Slots = () => {
   const numOfReels = 5;
-  const { isAnimating, slotValues } = useSlots();
+  const { isAnimating, slotValues, bet, setCurrentWinning } = useSlots();
 
   const [grid, setGrid] = useState<Fruit[][]>(convertToGrid(slotValues));
   const [winningLines, setWinningLines] = useState<Result[]>([]);
+  const [currentLineIndex, setCurrentLineIndex] = useState(0);
 
   // Konvertujemo slotValues u grid kada animacija počne
   useEffect(() => {
-    if (isAnimating.some((anim) => anim)) return; // Čekamo da svi reel-ovi završe
+    if (isAnimating.some((anim) => anim)) return;
     setGrid(convertToGrid(slotValues));
   }, [isAnimating, slotValues]);
 
-  // Računamo pobedničke linije kada su svi reel-ovi završili animaciju
+  // Računamo pobedničke linije kada animacija stane
   useEffect(() => {
     if (isAnimating.some((anim) => anim)) {
-      setWinningLines([]); // Resetujemo linije dok se slotovi okreću
+      setWinningLines([]);
+      setCurrentLineIndex(0); // Resetujemo linije kad počne spin
     } else {
-      setWinningLines(showWinningLines(grid)); // Računamo linije kad animacija stane
+      const lines = showWinningLines(grid);
+      const winning = calculateWinnings(lines, bet);
+      setCurrentWinning(winning);
+      setWinningLines(lines);
     }
   }, [isAnimating, grid]);
 
-  const reelWidth = 182;
+  // Animacija linija - prikazujemo jednu po jednu
+  useEffect(() => {
+    if (winningLines.length === 0) return;
+
+    const interval = setInterval(() => {
+      setCurrentLineIndex((prevIndex) => (prevIndex + 1) % winningLines.length);
+    }, 1000); // Menjamo liniju na svake 1 sekundu
+
+    return () => clearInterval(interval);
+  }, [winningLines]);
+
+  const reelWidth = 168;
   const reelHeight = 128;
 
   return (
@@ -40,30 +57,25 @@ const Slots = () => {
         ))}
       </div>
 
-      {/* SVG za pobednicke linije */}
+      {/* SVG za pobedničke linije */}
       <svg className="pointer-events-none absolute left-0 top-0 h-full w-full">
-        {winningLines.map((win, index) => {
-          // Koordinate za crtez linije
-          const lineCoords = winningLinesPositions[win.line]
-            .slice(0, win.contiguosFruit)
-            .map(
-              ([row, col]) =>
-                `${col * reelWidth + reelWidth / 2},${row * reelHeight + reelHeight / 2}`,
-            )
-            .join(" ");
-
-          return (
-            <polyline
-              key={index}
-              points={lineCoords}
-              stroke={win.color}
-              strokeWidth="7"
-              fill="none"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-          );
-        })}
+        {winningLines.length > 0 && (
+          <polyline
+            key={currentLineIndex}
+            points={winningLinesPositions[winningLines[currentLineIndex].line]
+              .slice(0, winningLines[currentLineIndex].contiguosFruit)
+              .map(
+                ([row, col]) =>
+                  `${col * reelWidth + reelWidth / 2},${row * reelHeight + reelHeight / 2}`,
+              )
+              .join(" ")}
+            stroke="gold"
+            strokeWidth="7"
+            fill="none"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+        )}
       </svg>
     </div>
   );

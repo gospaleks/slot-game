@@ -1,6 +1,7 @@
 import { useCallback, useContext, useState } from "react";
 import { createContext } from "react";
 import { GlobalContextType, Fruit } from "./types";
+import { getRandomFruit } from "./utils/fruitPayouts";
 
 export const GlobalContext = createContext<GlobalContextType | null>(null);
 
@@ -15,21 +16,23 @@ const GlobalContextProvider = ({ children }: { children: React.ReactNode }) => {
 
   // Playe's initial credit and bet
   const [credit, setCredit] = useState(500);
+  const [currentWinning, setCurrentWinning] = useState(0);
   const [bet, setBet] = useState(10);
 
   function generateRandomValues(init: boolean): Fruit[][] {
     const values: Fruit[][] = [];
+
     for (let i = 0; i < 5; i++) {
       const row: Fruit[] = [];
       for (let j = 0; j < (init ? 23 : 20); j++) {
-        row.push((Math.floor(Math.random() * 7) + 1) as Fruit);
+        row.push(getRandomFruit());
       }
       if (!init) {
         row.push(...slotValues[i].splice(0, 3));
-        // console.log(slotValues[i].splice(0, 3));
       }
       values.push(row);
     }
+
     return values;
   }
 
@@ -38,12 +41,12 @@ const GlobalContextProvider = ({ children }: { children: React.ReactNode }) => {
       return;
     }
 
+    setCredit((prev) => prev + currentWinning - bet);
+
     if (credit < bet) {
       alert("Not enough credit!");
       return;
     }
-
-    setCredit((prev) => prev - bet);
 
     const randomValues = generateRandomValues(false);
     setSlotValues((_) => randomValues);
@@ -75,6 +78,8 @@ const GlobalContextProvider = ({ children }: { children: React.ReactNode }) => {
         setCredit,
         bet,
         setBet,
+        currentWinning,
+        setCurrentWinning,
       }}
     >
       {children}

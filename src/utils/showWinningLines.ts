@@ -1,6 +1,5 @@
 import winningLinesPositions from "../data/winningLines";
 import { Fruit, Result } from "../types";
-import getRandomLightColor from "./getRandomLightColor";
 
 const showWinningLines = (grid: Fruit[][]) => {
   let winningLines: Result[] = [];
@@ -31,7 +30,6 @@ const showWinningLines = (grid: Fruit[][]) => {
         line: index,
         contiguosFruit: numOfContiguousFruits,
         fruit: firstFruit === null ? Fruit.Seven : firstFruit,
-        color: getRandomLightColor(),
       });
 
       console.log(line, numOfContiguousFruits);
