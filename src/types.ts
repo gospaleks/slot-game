@@ -24,4 +24,6 @@ export type GlobalContextType = {
   setBet: (bet: number | ((prev: number) => number)) => void;
   currentWinning: number;
   setCurrentWinning: (winning: number | ((prev: number) => number)) => void;
+  cardHistory: string[];
+  addToCardHistory: (color: string) => void;
 };

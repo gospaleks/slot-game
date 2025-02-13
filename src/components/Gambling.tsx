@@ -1,19 +1,24 @@
 import { useState } from "react";
 import { useSlots } from "../context";
 import Card from "./Card";
+import CardHistory from "./CardHistory";
 
 type Props = {
   setIsGambling: (isGambling: boolean) => void;
 };
 
 const Gambling = ({ setIsGambling }: Props) => {
-  const { currentWinning, setCurrentWinning } = useSlots();
+  const { currentWinning, setCurrentWinning, addToCardHistory } = useSlots();
   const [potentialWin, setPotentialWin] = useState(currentWinning * 2);
   const [isWinning, setIsWinning] = useState(false);
   const [isLost, setIsLost] = useState(false);
 
-  const handleChoice = () => {
+  const handleChoice = (choice: "red" | "black") => {
     const isWin = Math.random() < 0.5; // 50% sansa za dobitak
+    const newCard = isWin ? choice : choice === "red" ? "black" : "red";
+
+    addToCardHistory(newCard); // Čuvamo kartu u istoriji
+
     if (isWin) {
       setIsWinning(true);
       setTimeout(() => setIsWinning(false), 1000); // WIN traje 1 sekundu
@@ -29,7 +34,6 @@ const Gambling = ({ setIsGambling }: Props) => {
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-80">
       <div className="w-[500px] rounded-2xl border border-yellow-500 bg-gray-900 p-6 text-center text-white shadow-lg">
-        {/* Naslov i stanje */}
         <h2 className="mb-4 text-2xl font-bold">GAMBLE</h2>
         <div className="mb-4 flex items-center justify-between text-lg font-semibold text-yellow-400">
           <div className="flex flex-col">
@@ -42,27 +46,32 @@ const Gambling = ({ setIsGambling }: Props) => {
           </div>
         </div>
 
-        {/* Karta */}
-        <Card isWinning={isWinning} isLost={isLost} />
+        <div className="flex items-center justify-center gap-11">
+          {/* Glavna karta */}
+          <Card isWinning={isWinning} isLost={isLost} />
 
-        {/* Dugmad za izbor */}
-        <p className="mb-2 text-yellow-400">SELECT RED OR BLACK</p>
-        <div className="mb-4 flex justify-center gap-6">
-          <button
-            onClick={handleChoice}
-            className="rounded-full bg-red-600 px-6 py-3 font-bold text-white shadow-md transition hover:bg-red-700"
-          >
-            RED
-          </button>
-          <button
-            onClick={handleChoice}
-            className="rounded-full bg-black px-6 py-3 font-bold text-white shadow-md transition hover:bg-gray-800"
-          >
-            BLACK
-          </button>
+          {/* Dugmad za izbor */}
+          <div>
+            <div className="mb-4 flex flex-col justify-center gap-6">
+              <button
+                onClick={() => handleChoice("red")}
+                className="rounded-full bg-red-600 px-6 py-3 font-bold text-white shadow-md transition hover:bg-red-700"
+              >
+                RED
+              </button>
+              <button
+                onClick={() => handleChoice("black")}
+                className="rounded-full bg-black px-6 py-3 font-bold text-white shadow-md transition hover:bg-gray-800"
+              >
+                BLACK
+              </button>
+            </div>
+          </div>
         </div>
 
-        {/* Dugme za take win */}
+        {/* Istorija prethodnih karata */}
+        <CardHistory />
+
         <div className="mt-4">
           <button
             onClick={() => setIsGambling(false)}
