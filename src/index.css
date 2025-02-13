@@ -1,0 +1,16 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@keyframes spin {
+  0% {
+    transform: translateY(-2560px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+.reel-spin {
+  animation: spin var(--duration, 0.8s) ease-out forwards;
+}
