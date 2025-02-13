@@ -41,12 +41,15 @@ const GlobalContextProvider = ({ children }: { children: React.ReactNode }) => {
       return;
     }
 
-    setCredit((prev) => prev + currentWinning - bet);
+    setCredit((prev) => prev + currentWinning);
 
     if (credit < bet) {
       alert("Not enough credit!");
+      setCurrentWinning(0);
       return;
     }
+
+    setCredit((prev) => prev - bet);
 
     const randomValues = generateRandomValues(false);
     setSlotValues((_) => randomValues);

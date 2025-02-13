@@ -2,14 +2,21 @@ import { FaArrowsSpin } from "react-icons/fa6";
 import { GiCardExchange } from "react-icons/gi";
 import { useSlots } from "./context";
 import Slots from "./components/Slots";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import Balance from "./components/Balance";
+import Header from "./components/Header";
+import Gambling from "./components/Gambling";
 
 const App = () => {
   const { handleSpin, currentWinning } = useSlots();
+  const [isGambling, setIsGambling] = useState(false);
 
   // Dodajemo event listener za space key
   useEffect(() => {
+    if (isGambling) {
+      return;
+    }
+
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.code === "Space") {
         handleSpin();
@@ -21,17 +28,12 @@ const App = () => {
     return () => {
       window.removeEventListener("keydown", handleKeyDown);
     };
-  }, [handleSpin]);
+  }, [handleSpin, isGambling]);
 
   return (
     <div className="flex h-screen flex-col items-center justify-center">
       <div className="container mx-auto p-10">
-        <div className="mb-4 flex flex-col items-center justify-center">
-          <h1 className="text-4xl font-bold text-yellow-500">
-            🎰 Slot Machine 🎰
-          </h1>
-          <span className="font-semibold text-neutral-200">by gospaleks</span>
-        </div>
+        <Header />
         <div className="flex flex-row items-center justify-center gap-10">
           <div className="flex flex-col items-center justify-center rounded-lg border border-yellow-500 bg-gray-900 p-4 shadow-lg">
             <div className="text-xl font-bold text-white">20 Lines</div>
@@ -47,14 +49,15 @@ const App = () => {
             </button>
             <button
               disabled={currentWinning === 0}
-              onClick={() => alert("Not implemented yet!")}
+              onClick={() => setIsGambling(true)}
               className="flex flex-col items-center justify-center rounded-lg border border-yellow-500 bg-gray-900 p-4 shadow-lg hover:bg-gray-800"
             >
               <GiCardExchange className="text-6xl text-red-500" />
-              <span className="mt-2 text-white">Gamble</span>
+              <span className="mt-2 font-bold text-white">Gamble</span>
             </button>
           </div>
         </div>
+        {isGambling && <Gambling setIsGambling={setIsGambling} />}
         <Balance />
       </div>
     </div>
