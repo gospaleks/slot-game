@@ -11,7 +11,8 @@ type Props = {
 };
 
 const Gambling = ({ setIsGambling }: Props) => {
-  const { currentWinning, setCurrentWinning, addToCardHistory } = useSlots();
+  const { currentWinning, setCurrentWinning, addToCardHistory, setCredit } =
+    useSlots();
   const [potentialWin, setPotentialWin] = useState(currentWinning * 2);
   const [isWinning, setIsWinning] = useState(false);
   const [isLost, setIsLost] = useState(false);
@@ -56,25 +57,11 @@ const Gambling = ({ setIsGambling }: Props) => {
 
         <div className="flex items-center justify-center gap-11">
           {/* Glavna karta */}
-          <Card isWinning={isWinning} isLost={isLost} />
-
-          {/* Dugmad za izbor */}
-          <div>
-            <div className="mb-4 flex flex-col justify-center gap-6">
-              <button
-                onClick={() => handleChoice("red")}
-                className="rounded-full bg-red-600 px-6 py-3 font-bold text-white shadow-md transition hover:bg-red-700"
-              >
-                RED
-              </button>
-              <button
-                onClick={() => handleChoice("black")}
-                className="rounded-full bg-black px-6 py-3 font-bold text-white shadow-md transition hover:bg-gray-800"
-              >
-                BLACK
-              </button>
-            </div>
-          </div>
+          <Card
+            isWinning={isWinning}
+            isLost={isLost}
+            handleChoice={handleChoice}
+          />
         </div>
 
         {/* Istorija prethodnih karata */}
@@ -82,7 +69,11 @@ const Gambling = ({ setIsGambling }: Props) => {
 
         <div className="mt-4">
           <button
-            onClick={() => setIsGambling(false)}
+            onClick={() => {
+              setCredit((credit) => credit + currentWinning);
+              setCurrentWinning(0);
+              setIsGambling(false);
+            }}
             className="rounded bg-green-600 px-4 py-2 font-bold text-white shadow-md transition hover:bg-green-700"
           >
             TAKE WIN

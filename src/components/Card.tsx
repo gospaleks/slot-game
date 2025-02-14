@@ -3,9 +3,10 @@ import { useState, useEffect } from "react";
 type Props = {
   isWinning: boolean;
   isLost: boolean;
+  handleChoice: (choice: "red" | "black") => void;
 };
 
-const Card = ({ isWinning, isLost }: Props) => {
+const Card = ({ isWinning, isLost, handleChoice }: Props) => {
   const [color, setColor] = useState("red");
   const [showWin, setShowWin] = useState(false);
   const [showLost, setShowLost] = useState(false);
@@ -29,7 +30,7 @@ const Card = ({ isWinning, isLost }: Props) => {
   }, []);
 
   return (
-    <div className="mb-4 flex justify-center">
+    <div className="mb-4 flex items-center justify-between gap-12">
       <div
         className={`relative flex h-48 w-32 items-center justify-center rounded-xl border-4 border-white shadow-lg transition-all duration-300 ${
           showWin
@@ -64,6 +65,26 @@ const Card = ({ isWinning, isLost }: Props) => {
         {showLost && (
           <div className="absolute h-full w-full animate-ping rounded-xl bg-blue-300 opacity-50"></div>
         )}
+      </div>
+
+      {/* Dugmad za izbor */}
+      <div>
+        <div className="mb-4 flex flex-col justify-center gap-6">
+          <button
+            disabled={showWin || showLost}
+            onClick={() => handleChoice("red")}
+            className="rounded-full bg-red-600 px-6 py-3 font-bold text-white shadow-md transition hover:bg-red-700"
+          >
+            RED
+          </button>
+          <button
+            disabled={showWin || showLost}
+            onClick={() => handleChoice("black")}
+            className="rounded-full bg-black px-6 py-3 font-bold text-white shadow-md transition hover:bg-gray-800"
+          >
+            BLACK
+          </button>
+        </div>
       </div>
     </div>
   );

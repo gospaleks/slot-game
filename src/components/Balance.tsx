@@ -31,7 +31,10 @@ const Balance = () => {
       {/* Bet Controls */}
       <div className="flex items-center gap-6 rounded-lg border border-yellow-500 bg-gray-800 p-4 shadow-md">
         <button
-          onClick={handleDecrease}
+          onClick={(e) => {
+            handleDecrease();
+            e.currentTarget.blur();
+          }}
           className="flex items-center justify-center rounded-lg bg-red-600 px-6 py-3 text-2xl font-bold text-white transition hover:bg-red-700"
         >
           -
@@ -42,7 +45,10 @@ const Balance = () => {
         </div>
 
         <button
-          onClick={handleIncrease}
+          onClick={(e) => {
+            handleIncrease();
+            e.currentTarget.blur();
+          }}
           className="flex items-center justify-center rounded-lg bg-green-600 px-6 py-3 text-2xl font-bold text-white transition hover:bg-green-700"
         >
           +
