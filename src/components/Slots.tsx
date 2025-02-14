@@ -6,6 +6,11 @@ import convertToGrid from "../utils/convertToGrid";
 import showWinningLines from "../utils/showWinningLines";
 import winningLinesPositions from "../data/winningLines";
 import { calculateWinnings } from "../utils/fruitPayouts";
+import useSound from "use-sound";
+import winLineSound1 from "../assets/sounds/classic-win.mp3";
+import winLineSound2 from "../assets/sounds/classic-win-2.mp3";
+import reelFallSound from "../assets/sounds/reel-fall.mp3";
+import fiveOfAKindSound from "../assets/sounds/five-reels-win.mp3";
 
 const Slots = () => {
   const numOfReels = 5;
@@ -15,9 +20,30 @@ const Slots = () => {
   const [winningLines, setWinningLines] = useState<Result[]>([]);
   const [currentLineIndex, setCurrentLineIndex] = useState(0);
 
+  // Sounds
+  const [playWin1, { stop: stopWin1 }] = useSound(winLineSound1, {
+    volume: 0.4,
+  });
+  const [playWin2, { stop: stopWin2 }] = useSound(winLineSound2, {
+    volume: 0.4,
+  });
+  const [playFiveOfAKind, { stop: stopFiveOfAKind }] = useSound(
+    fiveOfAKindSound,
+    { volume: 0.6 },
+  );
+  const [playReelFall] = useSound(reelFallSound, { volume: 0.4 });
+  const [isFallSoundOn, setIsFallSoundOn] = useState(false);
+
   // Resetujemo pobedničke linije ČIM spin krene
   useEffect(() => {
     if (isAnimating.some((anim) => anim)) {
+      // Pokreni zvuk pada i resetuj ostale zvuke
+      if (!isFallSoundOn) {
+        stopAllSounds();
+        setIsFallSoundOn(true);
+        playReelFall();
+      }
+
       setWinningLines([]); // Reset
       setCurrentLineIndex(0);
     }
@@ -27,6 +53,7 @@ const Slots = () => {
   useEffect(() => {
     if (isAnimating.some((anim) => anim)) return;
     setGrid(convertToGrid(slotValues));
+    setIsFallSoundOn(false);
   }, [isAnimating, slotValues]);
 
   // Kada se grid ažurira, računamo pobedničke linije
@@ -47,8 +74,28 @@ const Slots = () => {
       setCurrentLineIndex((prevIndex) => (prevIndex + 1) % winningLines.length);
     }, 1000); // Menjamo liniju na svake 1 sekundu
 
+    // Winning zvuci
+    if (!isAnimating.some((anim) => anim) && winningLines.length > 0) {
+      const hasFullLine = winningLines.some(
+        (line) => line.contiguosFruit === 5,
+      );
+
+      if (hasFullLine) {
+        playFiveOfAKind();
+      } else {
+        const randomWinSound = Math.random() < 0.5 ? playWin1 : playWin2;
+        randomWinSound();
+      }
+    }
+
     return () => clearInterval(interval);
   }, [winningLines]);
+
+  const stopAllSounds = () => {
+    stopWin1();
+    stopWin2();
+    stopFiveOfAKind();
+  };
 
   const reelWidth = 168;
   const reelHeight = 128;

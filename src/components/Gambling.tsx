@@ -2,6 +2,9 @@ import { useState } from "react";
 import { useSlots } from "../context";
 import Card from "./Card";
 import CardHistory from "./CardHistory";
+import useSound from "use-sound";
+import gambleWinSound from "../assets/sounds/gamble-win-sound.mp3";
+import gambleLoseSound from "../assets/sounds/gamble-lose-sound.mp3";
 
 type Props = {
   setIsGambling: (isGambling: boolean) => void;
@@ -13,6 +16,9 @@ const Gambling = ({ setIsGambling }: Props) => {
   const [isWinning, setIsWinning] = useState(false);
   const [isLost, setIsLost] = useState(false);
 
+  const [playGambleWin] = useSound(gambleWinSound, { volume: 0.8 });
+  const [playGambleLose] = useSound(gambleLoseSound, { volume: 0.8 });
+
   const handleChoice = (choice: "red" | "black") => {
     const isWin = Math.random() < 0.5; // 50% sansa za dobitak
     const newCard = isWin ? choice : choice === "red" ? "black" : "red";
@@ -20,11 +26,13 @@ const Gambling = ({ setIsGambling }: Props) => {
     addToCardHistory(newCard); // Čuvamo kartu u istoriji
 
     if (isWin) {
+      playGambleWin();
       setIsWinning(true);
       setTimeout(() => setIsWinning(false), 1000); // WIN traje 1 sekundu
       setCurrentWinning(potentialWin);
       setPotentialWin(potentialWin * 2);
     } else {
+      playGambleLose();
       setCurrentWinning(0);
       setIsLost(true);
       setTimeout(() => setIsGambling(false), 1000); // LOST traje 1 sekundu
