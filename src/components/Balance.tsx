@@ -24,9 +24,10 @@ const Balance = () => {
   return (
     <div className="m-8 flex flex-row items-center justify-center gap-4 rounded-lg border-2 border-yellow-500 bg-gray-900 p-6 shadow-lg">
       {/* Credit Display */}
-      <p className="text-3xl font-extrabold text-yellow-400">
-        💰 Credit: <span className="text-white">{credit} RSD</span>
-      </p>
+      <div className="flex flex-col items-center px-8 text-3xl font-extrabold text-yellow-400">
+        <span>💰 Credit:</span>
+        <span className="text-white">{credit} RSD</span>
+      </div>
 
       {/* Bet Controls */}
       <div className="flex items-center gap-6 rounded-lg border border-yellow-500 bg-gray-800 p-4 shadow-md">
@@ -56,10 +57,10 @@ const Balance = () => {
       </div>
 
       {/* Current Winning Display */}
-      <p className="text-2xl font-bold text-green-400">
-        🎉 Current Winning:{" "}
+      <div className="flex flex-col items-center px-8 text-2xl font-bold text-green-400">
+        <span>🎉 Win:</span>
         <span className="text-white">{currentWinning} RSD</span>
-      </p>
+      </div>
     </div>
   );
 };

@@ -61,7 +61,8 @@ const Slots = () => {
     if (isAnimating.some((anim) => anim) || winningLines.length > 0) return;
 
     const lines = showWinningLines(grid);
-    const winning = calculateWinnings(lines, bet);
+    const winning = calculateWinnings(lines, grid, bet);
+
     setCurrentWinning(winning);
     setWinningLines(lines);
   }, [grid]);

@@ -6,6 +6,7 @@ export enum Fruit {
   Plum,
   Grapes,
   Seven,
+  Star,
 }
 
 export type Result = {

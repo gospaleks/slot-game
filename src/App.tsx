@@ -1,5 +1,6 @@
 import { FaArrowsSpin } from "react-icons/fa6";
 import { GiCardExchange } from "react-icons/gi";
+import { MdOutlineReplay } from "react-icons/md";
 import { useSlots } from "./context";
 import Slots from "./components/Slots";
 import { useEffect, useState } from "react";
@@ -10,6 +11,7 @@ import Gambling from "./components/Gambling";
 const App = () => {
   const { handleSpin, currentWinning } = useSlots();
   const [isGambling, setIsGambling] = useState(false);
+  const [isAutoSpinning, setIsAutoSpinning] = useState(false);
 
   // Dodajemo event listener za space key
   useEffect(() => {
@@ -30,6 +32,17 @@ const App = () => {
     };
   }, [handleSpin, isGambling]);
 
+  // Auto spin effect
+  useEffect(() => {
+    if (isAutoSpinning) {
+      const interval = setInterval(() => {
+        handleSpin();
+      }, 1000);
+
+      return () => clearInterval(interval);
+    }
+  }, [isAutoSpinning, handleSpin]);
+
   return (
     <div className="flex h-screen flex-col items-center justify-center">
       <div className="container mx-auto p-10">
@@ -43,16 +56,27 @@ const App = () => {
           <Slots />
           <div className="flex flex-col items-center justify-center gap-4">
             <button
-              onClick={handleSpin}
-              className="rounded-lg bg-yellow-500 p-4 font-bold text-white hover:bg-yellow-600"
+              onClick={() => setIsAutoSpinning(!isAutoSpinning)}
+              className="flex flex-col items-center justify-center gap-1 rounded-lg border border-yellow-500 bg-gray-900 px-4 py-3 text-white shadow-md transition hover:bg-gray-800 active:scale-95"
             >
-              <FaArrowsSpin className="text-6xl" />
-              <span className="mt-2 text-white">Spin</span>
+              <MdOutlineReplay className="text-5xl text-yellow-400 drop-shadow-md" />
+              <span className="text-sm font-medium tracking-wide text-yellow-400">
+                {isAutoSpinning ? "Stop" : "Auto Spin"}
+              </span>
             </button>
+
             <button
-              disabled={currentWinning === 0}
+              onClick={handleSpin}
+              disabled={isAutoSpinning}
+              className="flex flex-col items-center justify-center gap-1 rounded-lg border border-yellow-500 bg-yellow-500 px-4 py-3 text-white shadow-md transition hover:bg-yellow-600 active:scale-95"
+            >
+              <FaArrowsSpin className="text-8xl drop-shadow-md" />
+            </button>
+
+            <button
+              disabled={isAutoSpinning || currentWinning === 0}
               onClick={() => setIsGambling(true)}
-              className="flex flex-col items-center justify-center rounded-lg border border-yellow-500 bg-gray-900 p-4 shadow-lg hover:bg-gray-800"
+              className="flex flex-col items-center justify-center rounded-lg border border-yellow-500 bg-gray-900 p-4 shadow-lg hover:bg-gray-800 active:scale-95"
             >
               <GiCardExchange className="text-6xl text-red-500" />
               <span className="mt-2 font-bold text-white">Gamble</span>

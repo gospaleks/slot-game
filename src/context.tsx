@@ -1,7 +1,7 @@
 import { useCallback, useContext, useState } from "react";
 import { createContext } from "react";
 import { GlobalContextType, Fruit } from "./types";
-import { getRandomFruit } from "./utils/fruitPayouts";
+import reelStrips from "./data/reelStrips";
 
 export const GlobalContext = createContext<GlobalContextType | null>(null);
 
@@ -28,14 +28,20 @@ const GlobalContextProvider = ({ children }: { children: React.ReactNode }) => {
     const values: Fruit[][] = [];
 
     for (let i = 0; i < 5; i++) {
-      const row: Fruit[] = [];
-      for (let j = 0; j < (init ? 23 : 20); j++) {
-        row.push(getRandomFruit());
+      // Pozicija sa koje pocinje reel
+      const randomIndex = Math.floor(Math.random() * 40);
+      // Dupliramo niz da bismo omogućili kružno uzimanje elemenata
+      const reel = [...reelStrips[i], ...reelStrips[i]];
+      if (init) {
+        values.push(reel.slice(randomIndex, randomIndex + 23));
+      } else {
+        const selectedValues = reel.slice(randomIndex, randomIndex + 20);
+        const rearrangedValues = [
+          ...selectedValues.slice(3),
+          ...selectedValues.slice(0, 3),
+        ];
+        values.push(rearrangedValues);
       }
-      if (!init) {
-        row.push(...slotValues[i].splice(0, 3));
-      }
-      values.push(row);
     }
 
     return values;
