@@ -56,7 +56,7 @@ const Gambling = ({ setIsGambling }: Props) => {
         </div>
 
         <div className="flex items-center justify-center gap-11">
-          {/* Glavna karta */}
+          {/* Glavna karta i red/black dugmici */}
           <Card
             isWinning={isWinning}
             isLost={isLost}
@@ -67,6 +67,7 @@ const Gambling = ({ setIsGambling }: Props) => {
         {/* Istorija prethodnih karata */}
         <CardHistory />
 
+        {/* Take win dugme */}
         <div className="mt-4">
           <button
             onClick={() => {
