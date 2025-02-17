@@ -1,6 +1,7 @@
 import { FaArrowsSpin } from "react-icons/fa6";
 import { GiCardExchange } from "react-icons/gi";
 import { MdOutlineReplay } from "react-icons/md";
+import { FaStop } from "react-icons/fa";
 import { useSlots } from "./context";
 import Slots from "./components/Slots";
 import { useEffect, useState } from "react";
@@ -8,8 +9,17 @@ import Balance from "./components/Balance";
 import Header from "./components/Header";
 import Gambling from "./components/Gambling";
 
+import RTPTester from "./utils/RTPTester";
+import CreditSettings from "./components/CreditSettings";
+
 const App = () => {
-  const { handleSpin, currentWinning } = useSlots();
+  const {
+    handleSpin,
+    currentWinning,
+    credit,
+    isAnimating,
+    numberOfWinningLines,
+  } = useSlots();
   const [isGambling, setIsGambling] = useState(false);
   const [isAutoSpinning, setIsAutoSpinning] = useState(false);
 
@@ -45,13 +55,22 @@ const App = () => {
 
   return (
     <div className="flex h-screen flex-col items-center justify-center">
-      <div className="container mx-auto p-10">
+      {credit === 0 &&
+        currentWinning === 0 &&
+        isAnimating.every((anim) => anim === false) && <CreditSettings />}
+
+      <div className="mx-auto p-10">
+        {/* <RTPTester /> */}
+
         <Header />
 
         {/* Slot i dugme za spin i gamble */}
         <div className="flex flex-row items-center justify-center gap-10">
           <div className="flex flex-col items-center justify-center rounded-lg border border-yellow-500 bg-gray-900 p-4 shadow-lg">
-            <div className="text-xl font-bold text-white">20 Lines</div>
+            <div className="text-center text-xl font-bold text-white">
+              <p>{numberOfWinningLines} of 20</p>
+              <p>Lines</p>
+            </div>
           </div>
           <Slots />
           <div className="flex flex-col items-center justify-center gap-4">
@@ -59,7 +78,11 @@ const App = () => {
               onClick={() => setIsAutoSpinning(!isAutoSpinning)}
               className="flex flex-col items-center justify-center gap-1 rounded-lg border border-yellow-500 bg-gray-900 px-4 py-3 text-white shadow-md transition hover:bg-gray-800 active:scale-95"
             >
-              <MdOutlineReplay className="text-5xl text-yellow-400 drop-shadow-md" />
+              {isAutoSpinning ? (
+                <FaStop className="text-5xl text-yellow-500 drop-shadow-md" />
+              ) : (
+                <MdOutlineReplay className="text-5xl text-yellow-400 drop-shadow-md" />
+              )}
               <span className="text-sm font-medium tracking-wide text-yellow-400">
                 {isAutoSpinning ? "Stop" : "Auto Spin"}
               </span>

@@ -51,13 +51,13 @@ const Reel = ({ index, winningLines }: Props) => {
                 position: "absolute",
                 top: `${i * 128}px`,
                 left: 0,
-                backgroundColor: isWinningCell
-                  ? "rgba(255, 255, 0, 0.5)"
-                  : "transparent",
-                // backgroundImage: isWinningCell
-                //   ? "url(https://i.pinimg.com/originals/93/33/81/93338121b5740dca5013b9fdfc9566a3.gif)"
-                //   : "none",
-                // backgroundSize: "cover",
+                // backgroundColor: isWinningCell
+                //   ? "rgba(255, 255, 0, 0.5)"
+                //   : "transparent",
+                backgroundImage: isWinningCell
+                  ? "url(src/assets/images/fire.gif)"
+                  : "none",
+                backgroundSize: "cover",
               }}
             >
               <img

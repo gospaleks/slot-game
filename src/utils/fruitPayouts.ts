@@ -17,7 +17,14 @@ export const fruitPayouts: Record<Fruit, { 3: number; 4: number; 5: number }> =
     [Fruit.Star]: { 3: 5, 4: 20, 5: 500 }, // Specijalni simbol
   };
 
-export const betValues = [10, 20, 40, 50, 100, 200, 500, 1000];
+export const betValues = [8, 10, 12, 20, 40, 80, 100, 120, 200, 400, 800];
+
+// RNG
+export const getRandomIndex = (reelLength: number): number => {
+  const randomBuffer = new Uint32Array(1);
+  window.crypto.getRandomValues(randomBuffer);
+  return randomBuffer[0] % reelLength; // Skalira na opseg [0, reelLength - 1]
+};
 
 export const calculateWinnings = (
   winningLines: Result[],

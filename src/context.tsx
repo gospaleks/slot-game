@@ -2,6 +2,7 @@ import { useCallback, useContext, useState } from "react";
 import { createContext } from "react";
 import { GlobalContextType, Fruit } from "./types";
 import reelStrips from "./data/reelStrips";
+import { getRandomIndex, betValues } from "./utils/fruitPayouts";
 
 export const GlobalContext = createContext<GlobalContextType | null>(null);
 
@@ -14,9 +15,10 @@ const GlobalContextProvider = ({ children }: { children: React.ReactNode }) => {
     generateRandomValues(true),
   );
   const [cardHistory, setCardHistory] = useState<string[]>([]);
+  const [numberOfWinningLines, setNumberOfWinningLines] = useState(0);
 
   // Playe's initial credit and bet
-  const [credit, setCredit] = useState(500);
+  const [credit, setCredit] = useState(0);
   const [currentWinning, setCurrentWinning] = useState(0);
   const [bet, setBet] = useState(10);
 
@@ -29,7 +31,7 @@ const GlobalContextProvider = ({ children }: { children: React.ReactNode }) => {
 
     for (let i = 0; i < 5; i++) {
       // Pozicija sa koje pocinje reel
-      const randomIndex = Math.floor(Math.random() * 40);
+      const randomIndex = getRandomIndex(reelStrips[i].length);
       // Dupliramo niz da bismo omogućili kružno uzimanje elemenata
       const reel = [...reelStrips[i], ...reelStrips[i]];
       if (init) {
@@ -54,8 +56,22 @@ const GlobalContextProvider = ({ children }: { children: React.ReactNode }) => {
 
     setCredit((prev) => prev + currentWinning);
 
+    // Nema kredita
     if (credit < bet) {
-      alert("Not enough credit!");
+      // Postavi bet na prvi moguci
+      let newBet = 10;
+      for (const beti of betValues) {
+        if (credit >= beti) {
+          newBet = beti;
+        } else {
+          break;
+        }
+      }
+
+      // Ako ni taj nije moguci resetuj kredit da se pojavi modal za restart igre
+      if (credit < newBet) setCredit(0);
+
+      setBet(newBet);
       setCurrentWinning(0);
       return;
     }
@@ -96,6 +112,8 @@ const GlobalContextProvider = ({ children }: { children: React.ReactNode }) => {
         setCurrentWinning,
         cardHistory,
         addToCardHistory,
+        numberOfWinningLines,
+        setNumberOfWinningLines,
       }}
     >
       {children}

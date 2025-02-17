@@ -22,7 +22,7 @@ const Balance = () => {
   };
 
   return (
-    <div className="m-8 flex flex-row items-center justify-center gap-4 rounded-lg border-2 border-yellow-500 bg-gray-900 p-6 shadow-lg">
+    <div className="m-8 flex max-w-7xl flex-row items-center justify-center gap-4 rounded-lg border-2 border-yellow-500 bg-gray-900 p-6 shadow-lg">
       {/* Credit Display */}
       <div className="flex flex-col items-center px-8 text-3xl font-extrabold text-yellow-400">
         <span>💰 Credit:</span>

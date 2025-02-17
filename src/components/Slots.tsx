@@ -14,7 +14,13 @@ import fiveOfAKindSound from "../assets/sounds/five-reels-win.mp3";
 
 const Slots = () => {
   const numOfReels = 5;
-  const { isAnimating, slotValues, bet, setCurrentWinning } = useSlots();
+  const {
+    isAnimating,
+    slotValues,
+    bet,
+    setCurrentWinning,
+    setNumberOfWinningLines,
+  } = useSlots();
 
   const [grid, setGrid] = useState<Fruit[][]>(convertToGrid(slotValues));
   const [winningLines, setWinningLines] = useState<Result[]>([]);
@@ -65,6 +71,7 @@ const Slots = () => {
 
     setCurrentWinning(winning);
     setWinningLines(lines);
+    setNumberOfWinningLines(lines.length);
   }, [grid]);
 
   // Animacija linija - prikazujemo jednu po jednu
@@ -113,21 +120,33 @@ const Slots = () => {
       {/* SVG za pobedničke linije */}
       <svg className="pointer-events-none absolute left-0 top-0 h-full w-full">
         {winningLines.length > 0 && (
-          <polyline
-            key={currentLineIndex}
-            points={winningLinesPositions[winningLines[currentLineIndex].line]
-              .slice(0, winningLines[currentLineIndex].contiguosFruit)
-              .map(
-                ([row, col]) =>
-                  `${col * reelWidth + reelWidth / 2},${row * reelHeight + reelHeight / 2}`,
-              )
-              .join(" ")}
-            stroke="gold"
-            strokeWidth="7"
-            fill="none"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
+          <>
+            <polyline
+              key={currentLineIndex}
+              points={winningLinesPositions[winningLines[currentLineIndex].line]
+                .map(
+                  ([row, col]) =>
+                    `${col * reelWidth + reelWidth / 2},${row * reelHeight + reelHeight / 2}`,
+                )
+                .join(" ")}
+              stroke="gold"
+              strokeWidth="7"
+              fill="none"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+            {winningLinesPositions[winningLines[currentLineIndex].line].map(
+              ([row, col], index) => (
+                <circle
+                  key={index}
+                  cx={col * reelWidth + reelWidth / 2}
+                  cy={row * reelHeight + reelHeight / 2}
+                  r="5"
+                  fill="gold"
+                />
+              ),
+            )}
+          </>
         )}
       </svg>
     </div>

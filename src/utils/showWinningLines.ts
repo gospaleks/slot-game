@@ -44,7 +44,7 @@ const showWinningLines = (grid: Fruit[][]) => {
         fruit: firstFruit === null ? Fruit.Seven : firstFruit,
       });
 
-      console.log(line, numOfContiguousFruits);
+      // console.log(line, numOfContiguousFruits);
     }
   });
 
