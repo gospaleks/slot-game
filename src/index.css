@@ -2,6 +2,13 @@
 @tailwind components;
 @tailwind utilities;
 
+@font-face {
+  font-family: "Casino";
+  src: url("/fonts/Casino3D.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
 @keyframes spin {
   0% {
     transform: translateY(-2560px);

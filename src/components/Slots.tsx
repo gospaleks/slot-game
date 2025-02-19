@@ -10,7 +10,7 @@ import useSound from "use-sound";
 import winLineSound1 from "../assets/sounds/classic-win.mp3";
 import winLineSound2 from "../assets/sounds/classic-win-2.mp3";
 import reelFallSound from "../assets/sounds/reel-fall.mp3";
-import fiveOfAKindSound from "../assets/sounds/five-reels-win.mp3";
+import fiveOfAKindSound from "../assets/sounds/pumpaj.mp3";
 
 const Slots = () => {
   const numOfReels = 5;
@@ -35,7 +35,7 @@ const Slots = () => {
   });
   const [playFiveOfAKind, { stop: stopFiveOfAKind }] = useSound(
     fiveOfAKindSound,
-    { volume: 0.6 },
+    { volume: 0.4 },
   );
   const [playReelFall] = useSound(reelFallSound, { volume: 0.4 });
   const [isFallSoundOn, setIsFallSoundOn] = useState(false);

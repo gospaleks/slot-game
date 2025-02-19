@@ -4,9 +4,10 @@ type Props = {
   isWinning: boolean;
   isLost: boolean;
   handleChoice: (choice: "red" | "black") => void;
+  handleTakeWin: () => void;
 };
 
-const Card = ({ isWinning, isLost, handleChoice }: Props) => {
+const Card = ({ isWinning, isLost, handleChoice, handleTakeWin }: Props) => {
   const [color, setColor] = useState("red");
   const [showWin, setShowWin] = useState(false);
   const [showLost, setShowLost] = useState(false);
@@ -28,6 +29,26 @@ const Card = ({ isWinning, isLost, handleChoice }: Props) => {
 
     return () => clearInterval(interval);
   }, []);
+
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (showWin || showLost) return; // Disable key events during animations
+
+      if (event.key === "ArrowUp") {
+        handleChoice("red");
+      } else if (event.key === "ArrowDown") {
+        handleChoice("black");
+      } else if (event.key === " ") {
+        handleTakeWin();
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [handleChoice, handleTakeWin, showWin, showLost]);
 
   return (
     <div className="mb-4 flex items-center justify-between gap-12">

@@ -17,7 +17,9 @@ export const fruitPayouts: Record<Fruit, { 3: number; 4: number; 5: number }> =
     [Fruit.Star]: { 3: 5, 4: 20, 5: 500 }, // Specijalni simbol
   };
 
-export const betValues = [8, 10, 12, 20, 40, 80, 100, 120, 200, 400, 800];
+export const betValues = [
+  8, 10, 12, 16, 20, 30, 40, 80, 100, 120, 200, 400, 800, 1000,
+];
 
 // RNG
 export const getRandomIndex = (reelLength: number): number => {

@@ -17,13 +17,13 @@ const GlobalContextProvider = ({ children }: { children: React.ReactNode }) => {
   const [cardHistory, setCardHistory] = useState<string[]>([]);
   const [numberOfWinningLines, setNumberOfWinningLines] = useState(0);
 
-  // Playe's initial credit and bet
+  // Player's initial credit and bet
   const [credit, setCredit] = useState(0);
   const [currentWinning, setCurrentWinning] = useState(0);
   const [bet, setBet] = useState(10);
 
   const addToCardHistory = (color: string) => {
-    setCardHistory((prev) => [color, ...prev.slice(0, 9)]); // Čuvamo max 10 poslednjih
+    setCardHistory((prev) => [color, ...prev.slice(0, 9)]); // Cuvamo max 10 poslednjih
   };
 
   function generateRandomValues(init: boolean): Fruit[][] {
@@ -98,6 +98,11 @@ const GlobalContextProvider = ({ children }: { children: React.ReactNode }) => {
     });
   }, [bet, credit, isAnimating, generateRandomValues]);
 
+  const takeWin = () => {
+    setCredit((credit) => credit + currentWinning);
+    setCurrentWinning(0);
+  };
+
   return (
     <GlobalContext.Provider
       value={{
@@ -114,6 +119,7 @@ const GlobalContextProvider = ({ children }: { children: React.ReactNode }) => {
         addToCardHistory,
         numberOfWinningLines,
         setNumberOfWinningLines,
+        takeWin,
       }}
     >
       {children}

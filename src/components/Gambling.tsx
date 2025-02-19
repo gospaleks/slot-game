@@ -11,7 +11,7 @@ type Props = {
 };
 
 const Gambling = ({ setIsGambling }: Props) => {
-  const { currentWinning, setCurrentWinning, addToCardHistory, setCredit } =
+  const { currentWinning, setCurrentWinning, addToCardHistory, takeWin } =
     useSlots();
   const [potentialWin, setPotentialWin] = useState(currentWinning * 2);
   const [isWinning, setIsWinning] = useState(false);
@@ -21,7 +21,7 @@ const Gambling = ({ setIsGambling }: Props) => {
   const [playGambleLose] = useSound(gambleLoseSound, { volume: 0.8 });
 
   const handleChoice = (choice: "red" | "black") => {
-    const isWin = Math.random() < 0.5; // 50% sansa za dobitak
+    const isWin = Math.random() < 0.62; // 62% sansa za dobitak
     const newCard = isWin ? choice : choice === "red" ? "black" : "red";
 
     addToCardHistory(newCard); // Čuvamo kartu u istoriji
@@ -38,6 +38,11 @@ const Gambling = ({ setIsGambling }: Props) => {
       setIsLost(true);
       setTimeout(() => setIsGambling(false), 1000); // LOST traje 1 sekundu
     }
+  };
+
+  const handleTakeWin = () => {
+    takeWin();
+    setIsGambling(false);
   };
 
   return (
@@ -61,6 +66,7 @@ const Gambling = ({ setIsGambling }: Props) => {
             isWinning={isWinning}
             isLost={isLost}
             handleChoice={handleChoice}
+            handleTakeWin={handleTakeWin}
           />
         </div>
 
@@ -70,15 +76,24 @@ const Gambling = ({ setIsGambling }: Props) => {
         {/* Take win dugme */}
         <div className="mt-4">
           <button
-            onClick={() => {
-              setCredit((credit) => credit + currentWinning);
-              setCurrentWinning(0);
-              setIsGambling(false);
-            }}
+            onClick={handleTakeWin}
             className="rounded bg-green-600 px-4 py-2 font-bold text-white shadow-md transition hover:bg-green-700"
           >
             TAKE WIN
           </button>
+        </div>
+
+        {/* Upustvo */}
+        <div className="mt-4 text-sm text-neutral-300">
+          <p>
+            Press <span className="font-bold">SPACE</span> to take win.
+          </p>
+          <p>
+            Press <span className="font-bold">↑</span> for red card.
+          </p>
+          <p>
+            Press <span className="font-bold">↓</span> for black card.
+          </p>
         </div>
       </div>
     </div>

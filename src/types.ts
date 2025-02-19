@@ -29,4 +29,5 @@ export type GlobalContextType = {
   addToCardHistory: (color: string) => void;
   numberOfWinningLines: number;
   setNumberOfWinningLines: (lines: number | ((prev: number) => number)) => void;
+  takeWin: () => void;
 };
