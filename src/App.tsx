@@ -25,7 +25,7 @@ const App = () => {
   const [isSpinning, setIsSpinning] = useState(false); // za animaciju dugmeta
   const [isGameOver, setIsGameOver] = useState(false); // za prikazivanje modal-a
 
-  // Dodajemo event listener za space i g key
+  // Dodajemo event key listener-e
   useEffect(() => {
     // Ako je spin u toku, korisnik ne moze da koristi space ili g key
     if (isGambling || isAutoSpinning || isAnimating.some((anim) => anim)) {
@@ -61,6 +61,7 @@ const App = () => {
     }
   }, [isAutoSpinning, handleSpin]);
 
+  // Game over effect
   useEffect(() => {
     if (
       credit === 0 &&
@@ -74,6 +75,14 @@ const App = () => {
   }, [credit, currentWinning, isAnimating]);
 
   const startSpin = () => {
+    if (isAutoSpinning) return;
+
+    // Ako je spin u toku i korisnik klikne na dugme opet to znaci da zeli da skip-a animaciju
+    if (isAnimating.some((anim) => anim)) {
+      // TODO: zaustavi sve css animacije
+      return;
+    }
+
     handleSpin();
     setIsSpinning(true); // Pokrece animaciju dugmeta
     setTimeout(() => setIsSpinning(false), 500); // Resetuje animaciju posle 0.5s

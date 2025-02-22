@@ -30,4 +30,8 @@ export type GlobalContextType = {
   numberOfWinningLines: number;
   setNumberOfWinningLines: (lines: number | ((prev: number) => number)) => void;
   takeWin: () => void;
+  totalBet: number;
+  totalWin: number;
+  rtp: number;
+  numberOfSpins: number;
 };

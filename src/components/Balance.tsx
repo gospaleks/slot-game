@@ -2,7 +2,16 @@ import { useSlots } from "../context";
 import { betValues } from "../utils/fruitPayouts";
 
 const Balance = () => {
-  const { credit, bet, setBet, currentWinning } = useSlots();
+  const {
+    credit,
+    bet,
+    setBet,
+    currentWinning,
+    totalBet,
+    totalWin,
+    rtp,
+    numberOfSpins,
+  } = useSlots();
 
   const handleDecrease = () => {
     const currentIndex = betValues.indexOf(bet);
@@ -60,6 +69,26 @@ const Balance = () => {
       <div className="flex flex-col items-center px-8 text-2xl font-bold text-green-400">
         <span>🎉 Win:</span>
         <span className="text-white">{currentWinning} RSD</span>
+      </div>
+
+      {/* RTP Display */}
+      <div className="text-md flex flex-col items-center px-8 font-bold text-white">
+        <div>
+          <span>🔄 Spins:</span>{" "}
+          <span className="text-yellow-500">{numberOfSpins}</span>
+        </div>
+        <div>
+          <span>📊 RTP:</span>{" "}
+          <span className="text-red-500">{rtp.toFixed(2)}%</span>
+        </div>
+        <div>
+          <span>💰 Total Bet:</span>{" "}
+          <span className="text-yellow-500">{totalBet} RSD</span>
+        </div>
+        <div>
+          <span className="ml-4">💰 Total Win:</span>{" "}
+          <span className="text-green-500">{totalWin} RSD</span>
+        </div>
       </div>
     </div>
   );

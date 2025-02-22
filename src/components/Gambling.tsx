@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useSlots } from "../context";
 import Card from "./Card";
 import CardHistory from "./CardHistory";
@@ -20,8 +20,15 @@ const Gambling = ({ setIsGambling }: Props) => {
   const [playGambleWin] = useSound(gambleWinSound, { volume: 0.8 });
   const [playGambleLose] = useSound(gambleLoseSound, { volume: 0.8 });
 
+  // Resetujemo fokus sa dugmica kada se otvori modal
+  useEffect(() => {
+    if (document.activeElement instanceof HTMLElement) {
+      document.activeElement.blur();
+    }
+  }, []);
+
   const handleChoice = (choice: "red" | "black") => {
-    const isWin = Math.random() < 0.62; // 62% sansa za dobitak
+    const isWin = Math.random() < 0.52; // 52% sansa za dobitak
     const newCard = isWin ? choice : choice === "red" ? "black" : "red";
 
     addToCardHistory(newCard); // Čuvamo kartu u istoriji

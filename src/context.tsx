@@ -22,6 +22,12 @@ const GlobalContextProvider = ({ children }: { children: React.ReactNode }) => {
   const [currentWinning, setCurrentWinning] = useState(0);
   const [bet, setBet] = useState(10);
 
+  // RTP
+  const [totalBet, setTotalBet] = useState(0);
+  const [totalWin, setTotalWin] = useState(0);
+  const [rtp, setRTP] = useState(0);
+  const [numberOfSpins, setNumberOfSpins] = useState(0);
+
   const addToCardHistory = (color: string) => {
     setCardHistory((prev) => [color, ...prev.slice(0, 9)]); // Cuvamo max 10 poslednjih
   };
@@ -55,6 +61,10 @@ const GlobalContextProvider = ({ children }: { children: React.ReactNode }) => {
     }
 
     setCredit((prev) => prev + currentWinning);
+
+    // Za RTP
+    setTotalWin((prev) => prev + currentWinning); // Dodaj prethodni dobitak u totalW
+    setTotalBet((prev) => prev + bet); // Dodaj bet u totalBet
 
     // Nema kredita
     if (credit < bet) {
@@ -96,11 +106,19 @@ const GlobalContextProvider = ({ children }: { children: React.ReactNode }) => {
         800 + index * 250,
       ); // Svaki sledeći reel se zaustavlja sa malim zakašnjenjem
     });
+
+    setRTP(calculateRTP());
+    setNumberOfSpins((prev) => prev + 1);
   }, [bet, credit, isAnimating, generateRandomValues]);
 
   const takeWin = () => {
+    setTotalWin((prev) => prev + currentWinning); // Za RTP
     setCredit((credit) => credit + currentWinning);
     setCurrentWinning(0);
+  };
+
+  const calculateRTP = () => {
+    return totalBet === 0 ? 0 : (totalWin / totalBet) * 100;
   };
 
   return (
@@ -120,6 +138,10 @@ const GlobalContextProvider = ({ children }: { children: React.ReactNode }) => {
         numberOfWinningLines,
         setNumberOfWinningLines,
         takeWin,
+        totalBet,
+        totalWin,
+        rtp,
+        numberOfSpins,
       }}
     >
       {children}

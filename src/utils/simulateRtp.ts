@@ -24,6 +24,9 @@ const simulateRTP = () => {
       ]);
     }
 
+    // Transponuj grid
+    grid = grid[0].map((_, colIndex) => grid.map((row) => row[colIndex]));
+
     // Provera dobitnih linija
     const winningLines = showWinningLines(grid);
     const winnings = calculateWinnings(winningLines, grid, BET_AMOUNT);
