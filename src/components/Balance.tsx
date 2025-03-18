@@ -31,7 +31,7 @@ const Balance = () => {
   };
 
   return (
-    <div className="m-8 mb-4 flex max-w-7xl flex-row items-center justify-center gap-4 rounded-lg border-2 border-yellow-500 bg-gray-900 p-6 shadow-lg">
+    <div className="m-8 mb-4 flex flex-col items-center justify-center gap-4 rounded-lg border-2 border-yellow-500 bg-gray-900 p-6 shadow-lg sm:flex-row">
       {/* Credit Display */}
       <div className="flex flex-col items-center px-8 text-3xl font-extrabold text-yellow-400">
         <span>💰 Credit:</span>
@@ -71,23 +71,23 @@ const Balance = () => {
         <span className="text-white">{currentWinning} RSD</span>
       </div>
 
-      {/* RTP Display */}
-      <div className="text-md flex flex-col items-center px-8 font-bold text-white">
-        <div>
+      {/* RTP Display (for testing) */}
+      <div className="text-md hidden flex-col items-end px-8 font-bold text-white sm:flex">
+        <div className="flex w-full justify-end">
           <span>🔄 Spins:</span>{" "}
-          <span className="text-yellow-500">{numberOfSpins}</span>
+          <span className="ml-2 text-yellow-500">{numberOfSpins}</span>
         </div>
-        <div>
+        <div className="flex w-full justify-end">
           <span>📊 RTP:</span>{" "}
-          <span className="text-red-500">{rtp.toFixed(2)}%</span>
+          <span className="ml-2 text-red-500">{rtp.toFixed(2)}%</span>
         </div>
-        <div>
+        <div className="flex w-full justify-end">
           <span>💰 Total Bet:</span>{" "}
-          <span className="text-yellow-500">{totalBet} RSD</span>
+          <span className="ml-2 text-yellow-500">{totalBet} RSD</span>
         </div>
-        <div>
-          <span className="ml-4">💰 Total Win:</span>{" "}
-          <span className="text-green-500">{totalWin} RSD</span>
+        <div className="flex w-full justify-end">
+          <span>💰 Total Win:</span>{" "}
+          <span className="ml-2 text-green-500">{totalWin} RSD</span>
         </div>
       </div>
     </div>

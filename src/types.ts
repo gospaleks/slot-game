@@ -34,4 +34,6 @@ export type GlobalContextType = {
   totalWin: number;
   rtp: number;
   numberOfSpins: number;
+  isSoundOn: boolean;
+  setIsSoundOn: (isSoundOn: boolean) => void;
 };

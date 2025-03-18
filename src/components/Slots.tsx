@@ -20,6 +20,7 @@ const Slots = () => {
     bet,
     setCurrentWinning,
     setNumberOfWinningLines,
+    isSoundOn,
   } = useSlots();
 
   const [grid, setGrid] = useState<Fruit[][]>(convertToGrid(slotValues));
@@ -37,7 +38,7 @@ const Slots = () => {
     fiveOfAKindSound,
     { volume: 0.4 },
   );
-  const [playReelFall] = useSound(reelFallSound, { volume: 0.4 });
+  const [playReelFall] = useSound(reelFallSound, { volume: 0.6 });
   const [isFallSoundOn, setIsFallSoundOn] = useState(false);
 
   // Resetujemo pobedničke linije ČIM spin krene
@@ -47,7 +48,7 @@ const Slots = () => {
       if (!isFallSoundOn) {
         stopAllSounds();
         setIsFallSoundOn(true);
-        playReelFall();
+        if (isSoundOn) playReelFall();
       }
 
       setWinningLines([]); // Reset
@@ -83,7 +84,11 @@ const Slots = () => {
     }, 1000); // Menjamo liniju na svake 1 sekundu
 
     // Winning zvuci
-    if (!isAnimating.some((anim) => anim) && winningLines.length > 0) {
+    if (
+      isSoundOn &&
+      !isAnimating.some((anim) => anim) &&
+      winningLines.length > 0
+    ) {
       const hasFullLine = winningLines.some(
         (line) => line.contiguosFruit === 5,
       );
@@ -111,7 +116,7 @@ const Slots = () => {
   return (
     <div className="relative">
       {/* Grid slotova */}
-      <div className="relative flex items-center justify-center gap-10">
+      <div className="relative flex items-center justify-center gap-3 sm:gap-10">
         {[...Array(numOfReels)].map((_, i) => (
           <Reel key={i} index={i} winningLines={winningLines} />
         ))}

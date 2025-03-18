@@ -1,3 +1,4 @@
+import { FaVolumeUp, FaVolumeMute } from "react-icons/fa";
 import { FaArrowsSpin, FaGithub } from "react-icons/fa6";
 import { GiCardExchange } from "react-icons/gi";
 import { MdOutlineReplay } from "react-icons/md";
@@ -19,6 +20,8 @@ const App = () => {
     credit,
     isAnimating,
     numberOfWinningLines,
+    isSoundOn,
+    setIsSoundOn,
   } = useSlots();
   const [isGambling, setIsGambling] = useState(false);
   const [isAutoSpinning, setIsAutoSpinning] = useState(false);
@@ -75,17 +78,14 @@ const App = () => {
   }, [credit, currentWinning, isAnimating]);
 
   const startSpin = () => {
-    if (isAutoSpinning) return;
-
-    // Ako je spin u toku i korisnik klikne na dugme opet to znaci da zeli da skip-a animaciju
-    if (isAnimating.some((anim) => anim)) {
-      // TODO: zaustavi sve css animacije
-      return;
-    }
-
     handleSpin();
     setIsSpinning(true); // Pokrece animaciju dugmeta
     setTimeout(() => setIsSpinning(false), 500); // Resetuje animaciju posle 0.5s
+  };
+
+  // Toggle sound on/off
+  const handleMuteSound = () => {
+    setIsSoundOn(!isSoundOn);
   };
 
   return (
@@ -98,17 +98,38 @@ const App = () => {
         <Header />
 
         {/* Slot i dugme za spin i gamble */}
-        <div className="flex flex-row items-center justify-center gap-10">
-          <div className="flex flex-col items-center justify-center rounded-lg border border-yellow-500 bg-gray-900 p-4 shadow-lg">
-            <div className="text-center text-xl font-bold text-white">
-              <p>{numberOfWinningLines} of 20</p>
-              <p>Lines</p>
+        <div className="flex flex-col items-center justify-center gap-10 sm:flex-row">
+          {/* Broj pobednickih linija */}
+          <div className="flex flex-col items-center justify-center gap-4">
+            <div className="rounded-lg border border-yellow-500 bg-gray-900 p-3 shadow-lg">
+              {isSoundOn ? (
+                <FaVolumeUp
+                  onClick={handleMuteSound}
+                  className="cursor-pointer text-3xl text-yellow-500 transition duration-200 hover:scale-110"
+                />
+              ) : (
+                <FaVolumeMute
+                  onClick={handleMuteSound}
+                  className="cursor-pointer text-3xl text-white transition duration-200 hover:scale-110"
+                />
+              )}
+            </div>
+
+            <div className="flex flex-col items-center justify-center rounded-lg border border-yellow-500 bg-gray-900 p-4 shadow-lg">
+              <div className="text-center text-xl font-bold text-white">
+                <div className="flex flex-row items-center justify-center sm:flex-col">
+                  <p>{numberOfWinningLines} of 20</p>
+                  <p className="ml-2 sm:ml-0">Lines</p>
+                </div>
+              </div>
             </div>
           </div>
 
+          {/* Slotovi */}
           <Slots />
 
-          <div className="flex flex-col items-center justify-center gap-4">
+          {/* Dugmici za spin, auto spin i gamble */}
+          <div className="flex flex-row items-center justify-center gap-4 sm:flex-col">
             <button
               onClick={() => setIsAutoSpinning(!isAutoSpinning)}
               className="flex flex-col items-center justify-center gap-1 rounded-lg border border-yellow-500 bg-gray-900 px-4 py-3 text-white shadow-md transition hover:bg-gray-800 active:scale-95"
@@ -150,19 +171,20 @@ const App = () => {
         {/* Prikazujemo Gambling komponentu kao modal */}
         {isGambling && <Gambling setIsGambling={setIsGambling} />}
 
+        {/* Prikazujemo stanje balansa i izbor bet-a */}
         <Balance />
 
         {/* Upustvo i copyright */}
-        <div className="flex items-center justify-center gap-6 text-sm text-neutral-300">
-          <p>
+        <div className="flex flex-col items-center justify-center gap-2 text-sm text-neutral-300 sm:flex-row sm:gap-6">
+          <p className="hidden sm:block">
             Press <span className="font-bold">SPACE</span> to spin.
           </p>
-          <span>|</span>
-          <p>
+          <span className="hidden sm:block">|</span>
+          <p className="hidden sm:block">
             Press <span className="font-bold">GAMBLE (↑ or ↓)</span> to start
             gambling.
           </p>
-          <span>|</span>
+          <span className="hidden sm:block">|</span>
           <span className="font-semibold text-neutral-200">
             <a
               href="https://github.com/gospaleks"

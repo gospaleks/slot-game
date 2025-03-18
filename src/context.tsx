@@ -22,6 +22,9 @@ const GlobalContextProvider = ({ children }: { children: React.ReactNode }) => {
   const [currentWinning, setCurrentWinning] = useState(0);
   const [bet, setBet] = useState(10);
 
+  // Sound on/off
+  const [isSoundOn, setIsSoundOn] = useState(true);
+
   // RTP
   const [totalBet, setTotalBet] = useState(0);
   const [totalWin, setTotalWin] = useState(0);
@@ -142,6 +145,8 @@ const GlobalContextProvider = ({ children }: { children: React.ReactNode }) => {
         totalWin,
         rtp,
         numberOfSpins,
+        isSoundOn,
+        setIsSoundOn,
       }}
     >
       {children}

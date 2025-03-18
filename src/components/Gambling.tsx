@@ -11,8 +11,13 @@ type Props = {
 };
 
 const Gambling = ({ setIsGambling }: Props) => {
-  const { currentWinning, setCurrentWinning, addToCardHistory, takeWin } =
-    useSlots();
+  const {
+    currentWinning,
+    setCurrentWinning,
+    addToCardHistory,
+    takeWin,
+    isSoundOn,
+  } = useSlots();
   const [potentialWin, setPotentialWin] = useState(currentWinning * 2);
   const [isWinning, setIsWinning] = useState(false);
   const [isLost, setIsLost] = useState(false);
@@ -34,13 +39,13 @@ const Gambling = ({ setIsGambling }: Props) => {
     addToCardHistory(newCard); // Čuvamo kartu u istoriji
 
     if (isWin) {
-      playGambleWin();
+      if (isSoundOn) playGambleWin();
       setIsWinning(true);
       setTimeout(() => setIsWinning(false), 1000); // WIN traje 1 sekundu
       setCurrentWinning(potentialWin);
       setPotentialWin(potentialWin * 2);
     } else {
-      playGambleLose();
+      if (isSoundOn) playGambleLose();
       setCurrentWinning(0);
       setIsLost(true);
       setTimeout(() => setIsGambling(false), 1000); // LOST traje 1 sekundu
