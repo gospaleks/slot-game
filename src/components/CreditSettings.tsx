@@ -7,7 +7,6 @@ const CreditSettings = () => {
 
   const handleStartNewGame = () => {
     setCredit(newCredit);
-    // Add logic to close the modal if needed
   };
 
   return (

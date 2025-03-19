@@ -46,7 +46,7 @@ const InfoModal = ({ setIsInfoModalOpen }: Props) => {
         className="w-[600px] rounded-2xl border border-yellow-500 bg-gray-900 p-6 text-center text-white shadow-lg"
       >
         <h2 className="mb-1 text-2xl font-bold">
-          Ćacilend Slots - Payout Table
+          Ćacilend Slot - Payout Table
         </h2>
         <p className="mx-auto mb-4 max-w-sm text-sm text-zinc-400">
           The winnings are calculated based on your current bet.

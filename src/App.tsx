@@ -126,16 +126,16 @@ const App = () => {
               </div>
             </div>
 
-            <div className="rounded-lg border border-yellow-500 bg-gray-900 p-3 shadow-lg">
+            <div>
               {isSoundOn ? (
                 <FaVolumeUp
                   onClick={handleMuteSound}
-                  className="text-md cursor-pointer text-yellow-500 transition duration-200 hover:scale-110 sm:text-3xl"
+                  className="cursor-pointer text-2xl text-yellow-500 transition duration-200 hover:scale-110 sm:text-4xl"
                 />
               ) : (
                 <FaVolumeMute
                   onClick={handleMuteSound}
-                  className="text-md cursor-pointer text-white transition duration-200 hover:scale-110 sm:text-3xl"
+                  className="cursor-pointer text-2xl text-white transition duration-200 hover:scale-110 sm:text-4xl"
                 />
               )}
             </div>
@@ -143,10 +143,10 @@ const App = () => {
 
           {/* Slotovi */}
           <div className="sm:hidden">
-            <Slots reelWidth={76} reelHeight={64} />
+            <Slots key={1} reelWidth={80} reelHeight={64} />
           </div>
           <div className="hidden sm:block">
-            <Slots reelWidth={168} reelHeight={128} />
+            <Slots key={2} reelWidth={176} reelHeight={128} />
           </div>
 
           {/* Dugmici za spin, auto spin i gamble */}
