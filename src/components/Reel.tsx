@@ -53,13 +53,13 @@ const Reel = ({ index, winningLines, height }: Props) => {
                 top: `${i * height}px`,
                 left: 0,
                 backgroundImage: isWinningCell
-                  ? "url(src/assets/images/fire.gif)"
+                  ? "url(images/fire.gif)"
                   : "none",
                 backgroundSize: "cover",
               }}
             >
               <img
-                src={`/src/assets/fruits/${value}.png`}
+                src={`fruits/${value}.png`}
                 alt={`fruit-${value}`}
                 className="h-full w-full"
               />

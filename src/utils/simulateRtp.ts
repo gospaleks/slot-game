@@ -1,6 +1,6 @@
 import reelStrips from "../data/reelStrips";
 import showWinningLines from "../utils/showWinningLines";
-import { calculateWinnings, getRandomIndex } from "./fruitPayouts";
+import { calculateWinnings } from "./fruitPayouts";
 import { Fruit } from "../types";
 
 const SPIN_COUNT = 1000000;

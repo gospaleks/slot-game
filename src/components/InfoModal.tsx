@@ -55,18 +55,9 @@ const InfoModal = ({ setIsInfoModalOpen }: Props) => {
           {/* Cherry, Lemon, Orange */}
           <div className="flex flex-col items-center gap-2 rounded-lg border border-yellow-500 p-2">
             <div className="flex">
-              <img
-                src={`/src/assets/fruits/1.png`}
-                className="mb-2 h-16 w-16"
-              />
-              <img
-                src={`/src/assets/fruits/2.png`}
-                className="mb-2 h-16 w-16"
-              />
-              <img
-                src={`/src/assets/fruits/3.png`}
-                className="mb-2 h-16 w-16"
-              />
+              <img src={`fruits/1.png`} className="mb-2 h-16 w-16" />
+              <img src={`fruits/2.png`} className="mb-2 h-16 w-16" />
+              <img src={`fruits/3.png`} className="mb-2 h-16 w-16" />
             </div>
             <div className="flex gap-8">{betContent(Fruit.Cherry)}</div>
           </div>
@@ -74,14 +65,8 @@ const InfoModal = ({ setIsInfoModalOpen }: Props) => {
           {/* Watermelon, Plum */}
           <div className="flex flex-col items-center gap-2 rounded-lg border border-yellow-500 p-2">
             <div className="flex">
-              <img
-                src={`/src/assets/fruits/5.png`}
-                className="mb-2 h-16 w-16"
-              />
-              <img
-                src={`/src/assets/fruits/6.png`}
-                className="mb-2 h-16 w-16"
-              />
+              <img src={`fruits/5.png`} className="mb-2 h-16 w-16" />
+              <img src={`fruits/6.png`} className="mb-2 h-16 w-16" />
             </div>
             <div className="flex gap-8 text-left">
               <div className="flex gap-8">{betContent(Fruit.Plum)}</div>
@@ -91,20 +76,14 @@ const InfoModal = ({ setIsInfoModalOpen }: Props) => {
           <div className="flex items-center justify-center gap-4">
             {/* Grapes */}
             <div className="flex flex-1 flex-row items-center gap-2 rounded-lg border border-yellow-500 p-2">
-              <img
-                src={`/src/assets/fruits/4.png`}
-                className="mb-2 h-16 w-16"
-              />
+              <img src={`fruits/4.png`} className="mb-2 h-16 w-16" />
               <div className="flex flex-col text-left">
                 {betContent(Fruit.Grapes)}
               </div>
             </div>
 
             <div className="flex flex-1 flex-row items-center gap-2 rounded-lg border border-yellow-500 p-2">
-              <img
-                src={`/src/assets/fruits/8.png`}
-                className="mb-2 h-16 w-16"
-              />
+              <img src={`fruits/8.png`} className="mb-2 h-16 w-16" />
               <div className="flex flex-col text-left">
                 {betContent(Fruit.Star)}
               </div>
@@ -114,7 +93,7 @@ const InfoModal = ({ setIsInfoModalOpen }: Props) => {
 
         <div>
           <div className="mb-4 flex flex-row items-center gap-2 rounded-lg border border-yellow-500 p-2">
-            <img src={`/src/assets/fruits/7.png`} className="mb-2 h-16 w-16" />
+            <img src={`fruits/7.png`} className="mb-2 h-16 w-16" />
             <div className="flex gap-2 text-left">
               <div className="flex flex-col font-semibold">
                 {betContent(Fruit.Seven)}

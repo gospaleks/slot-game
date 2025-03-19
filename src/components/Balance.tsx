@@ -2,16 +2,7 @@ import { useSlots } from "../context";
 import { betValues } from "../utils/fruitPayouts";
 
 const Balance = () => {
-  const {
-    credit,
-    bet,
-    setBet,
-    currentWinning,
-    totalBet,
-    totalWin,
-    rtp,
-    numberOfSpins,
-  } = useSlots();
+  const { credit, bet, setBet, currentWinning } = useSlots();
 
   const handleDecrease = () => {
     const currentIndex = betValues.indexOf(bet);
