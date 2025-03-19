@@ -89,14 +89,14 @@ const Gambling = ({ setIsGambling }: Props) => {
         <div className="mt-4">
           <button
             onClick={handleTakeWin}
-            className="rounded bg-green-600 px-4 py-2 font-bold text-white shadow-md transition hover:bg-green-700"
+            className="w-full rounded bg-green-600 px-4 py-2 font-bold text-white shadow-md transition hover:bg-green-700 sm:w-auto"
           >
             TAKE WIN
           </button>
         </div>
 
         {/* Upustvo */}
-        <div className="mt-4 text-sm text-neutral-300">
+        <div className="mt-4 hidden text-sm text-neutral-300 sm:block">
           <p>
             Press <span className="font-bold">SPACE</span> to take win.
           </p>

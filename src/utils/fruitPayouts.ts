@@ -3,18 +3,18 @@ import { Fruit, Result } from "../types";
 // Vrednosti payout-a za svako voce
 export const fruitPayouts: Record<Fruit, { 3: number; 4: number; 5: number }> =
   {
-    [Fruit.Cherry]: { 3: 0.5, 4: 1, 5: 5 },
-    [Fruit.Lemon]: { 3: 0.5, 4: 1, 5: 5 },
-    [Fruit.Orange]: { 3: 0.5, 4: 1, 5: 5 },
+    [Fruit.Cherry]: { 3: 0.5, 4: 1, 5: 5 }, // sendvic
+    [Fruit.Lemon]: { 3: 0.5, 4: 1, 5: 5 }, // vucic
+    [Fruit.Orange]: { 3: 0.5, 4: 1, 5: 5 }, // caci
 
-    [Fruit.Plum]: { 3: 1, 4: 2, 5: 10 },
-    [Fruit.Watermelon]: { 3: 1, 4: 2, 5: 10 },
+    [Fruit.Plum]: { 3: 1, 4: 2, 5: 10 }, // ruke su vam krvave
+    [Fruit.Watermelon]: { 3: 1, 4: 2, 5: 10 }, // traktor
 
-    [Fruit.Grapes]: { 3: 1, 4: 4, 5: 20 },
+    [Fruit.Grapes]: { 3: 1, 4: 4, 5: 20 }, // sarovic
 
-    [Fruit.Seven]: { 3: 2, 4: 20, 5: 50 },
+    [Fruit.Seven]: { 3: 2, 4: 20, 5: 50 }, // pumpaj
 
-    [Fruit.Star]: { 3: 5, 4: 20, 5: 500 }, // Specijalni simbol
+    [Fruit.Star]: { 3: 5, 4: 20, 5: 500 }, // cash
   };
 
 export const betValues = [

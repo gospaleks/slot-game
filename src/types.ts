@@ -2,9 +2,9 @@ export enum Fruit {
   Cherry = 1,
   Lemon,
   Orange,
-  Watermelon,
-  Plum,
   Grapes,
+  Plum,
+  Watermelon,
   Seven,
   Star,
 }

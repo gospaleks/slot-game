@@ -6,9 +6,10 @@ import winningLinesPositions from "../data/winningLines";
 type Props = {
   index: number;
   winningLines: Result[];
+  height: number;
 };
 
-const Reel = ({ index, winningLines }: Props) => {
+const Reel = ({ index, winningLines, height }: Props) => {
   const { isAnimating, slotValues } = useSlots();
 
   const [displayValues, setDisplayValues] = useState<Fruit[]>([]);
@@ -21,7 +22,7 @@ const Reel = ({ index, winningLines }: Props) => {
 
   return (
     <div
-      className="reel-container relative flex flex-col items-center justify-center gap-2 overflow-hidden rounded border-4 border-yellow-400 bg-gray-900 text-white"
+      className="reel-container relative flex flex-col items-center justify-center gap-2 overflow-hidden rounded border-2 border-yellow-400 bg-gray-900 text-white sm:border-4"
       style={
         {
           "--duration": `${0.8 + index * 0.25}s`,
@@ -31,7 +32,7 @@ const Reel = ({ index, winningLines }: Props) => {
     >
       <div
         className={`${isAnimating[index] ? "reel-spin" : ""} flex flex-col gap-2`}
-        style={{ height: "384px", width: "128px" }}
+        style={{ height: height * 3, width: height }}
       >
         {displayValues.map((value, i) => {
           // Proveravamo da li je trenutna pozicija (i, index) deo pobedničke linije
@@ -46,10 +47,10 @@ const Reel = ({ index, winningLines }: Props) => {
             <div
               key={i}
               style={{
-                height: "128px",
-                width: "128px",
+                height: height,
+                width: height,
                 position: "absolute",
-                top: `${i * 128}px`,
+                top: `${i * height}px`,
                 left: 0,
                 backgroundImage: isWinningCell
                   ? "url(src/assets/images/fire.gif)"

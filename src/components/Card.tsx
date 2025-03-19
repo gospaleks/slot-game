@@ -94,14 +94,14 @@ const Card = ({ isWinning, isLost, handleChoice, handleTakeWin }: Props) => {
           <button
             disabled={showWin || showLost}
             onClick={() => handleChoice("red")}
-            className="rounded-full bg-red-600 px-6 py-3 font-bold text-white shadow-md transition hover:bg-red-700"
+            className="rounded-full border bg-red-600 px-6 py-3 font-bold text-white shadow-md transition hover:bg-red-700"
           >
             RED
           </button>
           <button
             disabled={showWin || showLost}
             onClick={() => handleChoice("black")}
-            className="rounded-full bg-black px-6 py-3 font-bold text-white shadow-md transition hover:bg-gray-800"
+            className="rounded-full border bg-black px-6 py-3 font-bold text-white shadow-md transition hover:bg-gray-800"
           >
             BLACK
           </button>

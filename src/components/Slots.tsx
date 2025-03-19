@@ -12,7 +12,12 @@ import winLineSound2 from "../assets/sounds/classic-win-2.mp3";
 import reelFallSound from "../assets/sounds/reel-fall.mp3";
 import fiveOfAKindSound from "../assets/sounds/pumpaj.mp3";
 
-const Slots = () => {
+type SlotsProps = {
+  reelWidth: number;
+  reelHeight: number;
+};
+
+const Slots = ({ reelWidth, reelHeight }: SlotsProps) => {
   const numOfReels = 5;
   const {
     isAnimating,
@@ -38,17 +43,17 @@ const Slots = () => {
     fiveOfAKindSound,
     { volume: 0.4 },
   );
-  const [playReelFall] = useSound(reelFallSound, { volume: 0.6 });
+  const [playReelFall] = useSound(reelFallSound, { volume: 0.4 });
   const [isFallSoundOn, setIsFallSoundOn] = useState(false);
 
   // Resetujemo pobedničke linije ČIM spin krene
   useEffect(() => {
     if (isAnimating.some((anim) => anim)) {
       // Pokreni zvuk pada i resetuj ostale zvuke
-      if (!isFallSoundOn) {
+      if (!isFallSoundOn && isSoundOn) {
         stopAllSounds();
         setIsFallSoundOn(true);
-        if (isSoundOn) playReelFall();
+        playReelFall();
       }
 
       setWinningLines([]); // Reset
@@ -110,15 +115,17 @@ const Slots = () => {
     stopFiveOfAKind();
   };
 
-  const reelWidth = 168;
-  const reelHeight = 128;
-
   return (
     <div className="relative">
       {/* Grid slotova */}
       <div className="relative flex items-center justify-center gap-3 sm:gap-10">
         {[...Array(numOfReels)].map((_, i) => (
-          <Reel key={i} index={i} winningLines={winningLines} />
+          <Reel
+            key={i}
+            index={i}
+            winningLines={winningLines}
+            height={reelHeight}
+          />
         ))}
       </div>
 
@@ -135,7 +142,7 @@ const Slots = () => {
                 )
                 .join(" ")}
               stroke="gold"
-              strokeWidth="7"
+              strokeWidth={reelWidth < 128 ? 3 : 7}
               fill="none"
               strokeLinecap="round"
               strokeLinejoin="round"

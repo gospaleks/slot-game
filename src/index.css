@@ -18,6 +18,17 @@
   }
 }
 
+@media (max-width: 768px) {
+  @keyframes spin {
+    0% {
+      transform: translateY(-1280px);
+    }
+    100% {
+      transform: translateY(0);
+    }
+  }
+}
+
 .reel-spin {
   animation: spin var(--duration, 0.8s) ease-out forwards;
 }

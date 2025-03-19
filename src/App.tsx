@@ -1,3 +1,4 @@
+import { RiInformation2Line } from "react-icons/ri";
 import { FaVolumeUp, FaVolumeMute } from "react-icons/fa";
 import { FaArrowsSpin, FaGithub } from "react-icons/fa6";
 import { GiCardExchange } from "react-icons/gi";
@@ -10,8 +11,9 @@ import Balance from "./components/Balance";
 import Header from "./components/Header";
 import Gambling from "./components/Gambling";
 
-import RTPTester from "./utils/RTPTester";
+// import RTPTester from "./utils/RTPTester";
 import CreditSettings from "./components/CreditSettings";
+import InfoModal from "./components/InfoModal";
 
 const App = () => {
   const {
@@ -27,6 +29,7 @@ const App = () => {
   const [isAutoSpinning, setIsAutoSpinning] = useState(false);
   const [isSpinning, setIsSpinning] = useState(false); // za animaciju dugmeta
   const [isGameOver, setIsGameOver] = useState(false); // za prikazivanje modal-a
+  const [isInfoModalOpen, setIsInfoModalOpen] = useState(false); // za prikazivanje modal-a sa informacijama
 
   // Dodajemo event key listener-e
   useEffect(() => {
@@ -88,45 +91,63 @@ const App = () => {
     setIsSoundOn(!isSoundOn);
   };
 
+  // Toggle info modal
+  const handleInfoModal = () => {
+    setIsInfoModalOpen(!isInfoModalOpen);
+  };
+
   return (
     <div className="flex flex-col items-center justify-center">
       {isGameOver && <CreditSettings />}
+      {isInfoModalOpen && <InfoModal setIsInfoModalOpen={setIsInfoModalOpen} />}
 
-      <div className="mx-auto p-10">
+      {/* Main container */}
+      <div className="mx-auto py-4 sm:p-10">
         {/* <RTPTester /> */}
 
         <Header />
 
-        {/* Slot i dugme za spin i gamble */}
-        <div className="flex flex-col items-center justify-center gap-10 sm:flex-row">
-          {/* Broj pobednickih linija */}
-          <div className="flex flex-col items-center justify-center gap-4">
-            <div className="rounded-lg border border-yellow-500 bg-gray-900 p-3 shadow-lg">
-              {isSoundOn ? (
-                <FaVolumeUp
-                  onClick={handleMuteSound}
-                  className="cursor-pointer text-3xl text-yellow-500 transition duration-200 hover:scale-110"
-                />
-              ) : (
-                <FaVolumeMute
-                  onClick={handleMuteSound}
-                  className="cursor-pointer text-3xl text-white transition duration-200 hover:scale-110"
-                />
-              )}
+        <div className="flex flex-col items-center justify-center gap-4 sm:flex-row sm:gap-10">
+          {/* Broj pobednickih linija i sound on/off */}
+          <div className="flex flex-row items-center justify-center gap-4 sm:flex-col">
+            <div>
+              <RiInformation2Line
+                onClick={handleInfoModal}
+                className="cursor-pointer text-4xl text-yellow-500 transition duration-200 hover:scale-110 sm:text-6xl"
+              />
             </div>
 
-            <div className="flex flex-col items-center justify-center rounded-lg border border-yellow-500 bg-gray-900 p-4 shadow-lg">
-              <div className="text-center text-xl font-bold text-white">
+            <div className="flex flex-col items-center justify-center rounded-lg border border-yellow-500 bg-gray-900 p-2 shadow-lg sm:p-4">
+              <div className="text-md text-center font-bold text-white sm:text-xl">
                 <div className="flex flex-row items-center justify-center sm:flex-col">
                   <p>{numberOfWinningLines} of 20</p>
                   <p className="ml-2 sm:ml-0">Lines</p>
                 </div>
               </div>
             </div>
+
+            <div className="rounded-lg border border-yellow-500 bg-gray-900 p-3 shadow-lg">
+              {isSoundOn ? (
+                <FaVolumeUp
+                  onClick={handleMuteSound}
+                  className="text-md cursor-pointer text-yellow-500 transition duration-200 hover:scale-110 sm:text-3xl"
+                />
+              ) : (
+                <FaVolumeMute
+                  onClick={handleMuteSound}
+                  className="text-md cursor-pointer text-white transition duration-200 hover:scale-110 sm:text-3xl"
+                />
+              )}
+            </div>
           </div>
 
           {/* Slotovi */}
-          <Slots />
+          <div className="sm:hidden">
+            <Slots reelWidth={76} reelHeight={64} />
+          </div>
+          <div className="hidden sm:block">
+            <Slots reelWidth={168} reelHeight={128} />
+          </div>
 
           {/* Dugmici za spin, auto spin i gamble */}
           <div className="flex flex-row items-center justify-center gap-4 sm:flex-col">
