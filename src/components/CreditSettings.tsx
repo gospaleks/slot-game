@@ -13,11 +13,7 @@ const CreditSettings = () => {
     <div className="fixed inset-0 z-20 flex items-center justify-center bg-black bg-opacity-80">
       <div className="rounded-2xl border border-yellow-500 bg-gray-900 p-12 text-center text-white shadow-lg">
         <div>
-          <h1 className="mb-2 text-4xl font-bold">Welcome to Ćaciland Slot</h1>
-          <p className="mb-4 text-sm text-zinc-300">
-            Any resemblance of symbols to actual characters is purely
-            coincidental
-          </p>
+          <h1 className="mb-4 text-4xl font-bold">Welcome to Gospaleks Slot</h1>
         </div>
         <div className="border-b border-t border-yellow-500 p-4">
           <h2 className="mb-4 text-left text-2xl font-bold">Set Your Credit</h2>

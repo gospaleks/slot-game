@@ -1,50 +1,63 @@
-# React + TypeScript + Vite
+# 🎰 Gospaleks Slot
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+**Gospaleks Slot** je slot igra inspirisana popularnim slotom **20 Super Hot**, razvijena pomoću React tehnologije. Igra je napravljena **isključivo za zabavu** i nema nikakvu komercijalnu svrhu.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+![Gameplay Screenshot](./screenshots/slot-game.png)
 
-## Expanding the ESLint configuration
+## 🎮 Opis igre
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+Gospaleks Slot je jednostavna slot mašina sa 5 kolona i do 20 aktivnih isplatnih linija. Cilj je da se spinuju kolone i ostvare dobitne kombinacije voćnih simbola. Pored osnovnih spinova, igra uključuje i **Gamble** opciju za dupliranje dobitka.
 
-- Configure the top-level `parserOptions` property like this:
+### 🔑 Karakteristike:
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+- 🎰 5 kolona, 3 reda
+- 💸 Do 20 linija isplate
+- 🍒 Klasični voćni simboli + specijalni simboli (Zvezda i 7)
+- 🔁 Auto Spin funkcija
+- 🃏 Gamble ekran za dupliranje dobitka
+- 📊 Payout tabela dostupna u svakom trenutku
+
+---
+
+## 🖼️ Screenshotovi
+
+### ▶️ Glavni ekran
+
+![Main Game](./screenshots/slot-game.png)
+
+### 📊 Tabela isplata
+
+![Payout Table](./screenshots/payout-table.png)
+
+### 🃏 Gamble ekran
+
+![Gamble Screen](./screenshots/gamble.png)
+
+---
+
+## 🛠️ Tehnologije
+
+- [React](https://reactjs.org/)
+- [JavaScript](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
+- TailwindCSS i SVG grafika
+
+---
+
+## 🚀 Pokretanje lokalno
+
+1. Kloniraj repozitorijum:
+
+```bash
+git clone https://github.com/gospaleks/slot-game.git
+cd gospaleks-slot
+npm install
+npm run dev
 ```
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+---
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
+## ⚠️ Odricanje odgovornosti
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
+Ova aplikacija je napravljena isključivo u edukativne i demonstracione svrhe. Ne postoji mogućnost stvarnog novčanog dobitka. Svi prikazani krediti i iznosi su simulirani i nemaju pravu novčanu vrednost.

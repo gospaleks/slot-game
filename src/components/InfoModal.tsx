@@ -46,7 +46,7 @@ const InfoModal = ({ setIsInfoModalOpen }: Props) => {
         className="w-[600px] rounded-2xl border border-yellow-500 bg-gray-900 p-6 text-center text-white shadow-lg"
       >
         <h2 className="mb-1 text-2xl font-bold">
-          Ćacilend Slot - Payout Table
+          Gospaleks Slot - Payout Table
         </h2>
         <p className="mx-auto mb-4 max-w-sm text-sm text-zinc-400">
           The winnings are calculated based on your current bet.
@@ -54,7 +54,7 @@ const InfoModal = ({ setIsInfoModalOpen }: Props) => {
         <div className="mb-4 flex flex-col gap-4 text-lg font-semibold">
           {/* Cherry, Lemon, Orange */}
           <div className="flex flex-col items-center gap-2 rounded-lg border border-yellow-500 p-2">
-            <div className="flex">
+            <div className="flex items-center gap-2">
               <img src={`fruits/1.png`} className="mb-2 h-16 w-16" />
               <img src={`fruits/2.png`} className="mb-2 h-16 w-16" />
               <img src={`fruits/3.png`} className="mb-2 h-16 w-16" />
@@ -64,7 +64,7 @@ const InfoModal = ({ setIsInfoModalOpen }: Props) => {
 
           {/* Watermelon, Plum */}
           <div className="flex flex-col items-center gap-2 rounded-lg border border-yellow-500 p-2">
-            <div className="flex">
+            <div className="flex items-center gap-2">
               <img src={`fruits/5.png`} className="mb-2 h-16 w-16" />
               <img src={`fruits/6.png`} className="mb-2 h-16 w-16" />
             </div>
@@ -75,14 +75,14 @@ const InfoModal = ({ setIsInfoModalOpen }: Props) => {
 
           <div className="flex items-center justify-center gap-4">
             {/* Grapes */}
-            <div className="flex flex-1 flex-row items-center gap-2 rounded-lg border border-yellow-500 p-2">
+            <div className="flex flex-1 flex-row items-center justify-center gap-4 rounded-lg border border-yellow-500 p-2">
               <img src={`fruits/4.png`} className="mb-2 h-16 w-16" />
               <div className="flex flex-col text-left">
                 {betContent(Fruit.Grapes)}
               </div>
             </div>
 
-            <div className="flex flex-1 flex-row items-center gap-2 rounded-lg border border-yellow-500 p-2">
+            <div className="flex flex-1 flex-row items-center justify-center gap-4 rounded-lg border border-yellow-500 p-2">
               <img src={`fruits/8.png`} className="mb-2 h-16 w-16" />
               <div className="flex flex-col text-left">
                 {betContent(Fruit.Star)}
@@ -100,7 +100,7 @@ const InfoModal = ({ setIsInfoModalOpen }: Props) => {
               </div>
               <span className="block flex-1 text-white">
                 Substitutes for all symbols except{" "}
-                <span className="text-yellow-300">Cash</span> symbol
+                <span className="text-yellow-300">Star</span> symbol
               </span>
             </div>
           </div>
